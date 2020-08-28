@@ -1,63 +1,23 @@
 import {StatusBar} from 'expo-status-bar';
 import React from 'react';
-import {StyleSheet, Text, View, FlatList, TouchableOpacity, Image, SafeAreaView} from 'react-native';
-
-const mediaArray = [
-  {
-    'key': '0',
-    'title': 'Title 1',
-    'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sodales enim eget leo condimentum vulputate. Sed lacinia consectetur fermentum. Vestibulum lobortis purus id nisi mattis posuere. Praesent sagittis justo quis nibh ullamcorper, eget elementum lorem consectetur. Pellentesque eu consequat justo, eu sodales eros.',
-    'thumbnails': {
-      w160: 'http://placekitten.com/160/161',
-    },
-    'filename': 'http://placekitten.com/2048/1920',
-  },
-  {
-    'key': '1',
-    'title': 'Title 2',
-    'description': 'Donec dignissim tincidunt nisl, non scelerisque massa pharetra ut. Sed vel velit ante. Aenean quis viverra magna. Praesent eget cursus urna. Ut rhoncus interdum dolor non tincidunt. Sed vehicula consequat facilisis. Pellentesque pulvinar sem nisl, ac vestibulum erat rhoncus id. Vestibulum tincidunt sapien eu ipsum tincidunt pulvinar. ',
-    'thumbnails': {
-      w160: 'http://placekitten.com/160/164',
-    },
-    'filename': 'http://placekitten.com/2041/1922',
-  },
-  {
-    'key': '2',
-    'title': 'Title 3',
-    'description': 'Phasellus imperdiet nunc tincidunt molestie vestibulum. Donec dictum suscipit nibh. Sed vel velit ante. Aenean quis viverra magna. Praesent eget cursus urna. Ut rhoncus interdum dolor non tincidunt. Sed vehicula consequat facilisis. Pellentesque pulvinar sem nisl, ac vestibulum erat rhoncus id. ',
-    'thumbnails': {
-      w160: 'http://placekitten.com/160/167',
-    },
-    'filename': 'http://placekitten.com/2039/1920',
-  },
-];
-
+import {StyleSheet, SafeAreaView, View, Text, Image} from 'react-native';
+import List from './components/List';
 
 const App = () => {
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={mediaArray}
-        renderItem={({item}) => {
-          return (
-            <TouchableOpacity
-              style={styles.list_items}>
-              <View style={styles.items_sidetoside}>
-                <Image
-                  style={{width: 250, height: 250}}
-                  source={{uri: item.thumbnails.w160}}
-                />
-                <View>
-                  <Text
-                    style={{fontSize: 20}}>{item.title}</Text>
-                  <Text
-                    style={{textAlign: 'left'}}>{item.description}</Text>
-                </View>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
-      />
+      <View>
+        <Image
+          style={{width: 380, height: 200}}
+          resizeMode='contain'
+          source={{uri: 'http://placekitten.com/400/201'}}
+        />
+        <Text style={styles.header_text}>
+          Homeless cats
+        </Text>
+      </View>
+      <StatusBar style={{backgroundColor: 'lightgreen'}}></StatusBar>
+      <List />
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -65,10 +25,9 @@ const App = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
+    flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    margin: 20,
   },
   list_items: {
     backgroundColor: 'lightgrey',
@@ -76,8 +35,15 @@ const styles = StyleSheet.create({
     margin: 3,
   },
   items_sidetoside: {
-    flexDirection: 'row'
-  }
+    flexDirection: 'row',
+  },
+  header_text: {
+    fontSize: 20,
+    color: '#fff',
+    position: 'absolute',
+    top: 20,
+    left: 20,
+  },
 });
 
 export default App;
