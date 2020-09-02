@@ -1,33 +1,32 @@
-/* eslint-disable max-len */
 import React, {useState, useEffect} from 'react';
-import {FlatList} from 'react-native';
+import {
+  FlatList,
+} from 'react-native';
 import ListItem from './ListItem';
-
+import PropTypes from 'prop-types';
 
 const url = 'http://media.mw.metropolia.fi/wbma/';
 
-const List = () => {
+const List = ({navigation}) => {
   const [mediaArray, setMediaArray] = useState([]);
 
-  const loadMedia = async (limit = 10) => {
-    try {
-      const response = await fetch(url + 'media?limit=' + limit);
-      const json = await response.json();
-      const media = await Promise.all(json.map(async (item) => {
-        const response = await fetch(url + 'media/' + item.file_id);
-        const json = await response.json();
-        return json;
-      }));
-      setMediaArray(media);
-      console.log('mediaArray:', mediaArray);
-      //
-    } catch (error) {
-      console.error('loadMedia error', error);
-    }
-    // console.log('mediaArray', mediaArray);
-  };
-
   useEffect(() => {
+    const loadMedia = async () => {
+      try {
+        const response = await fetch(url + 'media');
+        const json = await response.json();
+        const media = await Promise.all(json.map(async (item) => {
+          const resp2 = await fetch(url + 'media/' + item.file_id);
+          const json2 = await resp2.json();
+          return json2;
+        }));
+        console.log('loadMedia', media);
+        setMediaArray(media);
+      } catch (e) {
+        console.error(e);
+      }
+    };
+
     loadMedia();
   }, []);
 
@@ -35,40 +34,15 @@ const List = () => {
     <FlatList
       data={mediaArray}
       keyExtractor={(item, index) => index.toString()}
-      renderItem={({item}) => <ListItem singleMedia={item} />}
+      renderItem={({item}) =>
+        <ListItem singleMedia={item} navigation={navigation} />
+      }
     />
   );
 };
 
+List.propTypes = {
+  navigation: PropTypes.object,
+};
+
 export default List;
-
-
-/* const mediaArray = [
-  {
-    'key': '0',
-    'title': 'Title 1',
-    'description': 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sodales enim eget leo condimentum vulputate. Sed lacinia consectetur fermentum. Vestibulum lobortis purus id nisi mattis posuere. Praesent sagittis justo quis nibh ullamcorper, eget elementum lorem consectetur. Pellentesque eu consequat justo, eu sodales eros.',
-    'thumbnails': {
-      w160: 'http://placekitten.com/160/161',
-    },
-    'filename': 'http://placekitten.com/2048/1920',
-  },
-  {
-    'key': '1',
-    'title': 'Title 2',
-    'description': 'Donec dignissim tincidunt nisl, non scelerisque massa pharetra ut. Sed vel velit ante. Aenean quis viverra magna. Praesent eget cursus urna. Ut rhoncus interdum dolor non tincidunt. Sed vehicula consequat facilisis. Pellentesque pulvinar sem nisl, ac vestibulum erat rhoncus id. Vestibulum tincidunt sapien eu ipsum tincidunt pulvinar. ',
-    'thumbnails': {
-      w160: 'http://placekitten.com/160/164',
-    },
-    'filename': 'http://placekitten.com/2041/1922',
-  },
-  {
-    'key': '2',
-    'title': 'Title 3',
-    'description': 'Phasellus imperdiet nunc tincidunt molestie vestibulum. Donec dictum suscipit nibh. Sed vel velit ante. Aenean quis viverra magna. Praesent eget cursus urna. Ut rhoncus interdum dolor non tincidunt. Sed vehicula consequat facilisis. Pellentesque pulvinar sem nisl, ac vestibulum erat rhoncus id. ',
-    'thumbnails': {
-      w160: 'http://placekitten.com/160/167',
-    },
-    'filename': 'http://placekitten.com/2039/1920',
-  },
-];*/
