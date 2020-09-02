@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   items_sidetoside: {
     flexDirection: 'row',
   },
-  /*text: {
+  /* text: {
     fontFamily: 'Open Sans',
     paddingLeft: 10,
   },*/

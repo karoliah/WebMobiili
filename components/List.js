@@ -24,7 +24,7 @@ const List = () => {
     } catch (error) {
       console.error('loadMedia error', error);
     }
-    //console.log('mediaArray', mediaArray);
+    // console.log('mediaArray', mediaArray);
   };
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const List = () => {
 export default List;
 
 
-/*const mediaArray = [
+/* const mediaArray = [
   {
     'key': '0',
     'title': 'Title 1',
