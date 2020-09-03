@@ -1,13 +1,21 @@
-import React from 'react';
-import {StyleSheet, SafeAreaView, Text} from 'react-native';
+import React, {useContext} from 'react';
+import {StyleSheet, SafeAreaView, Text, Button} from 'react-native';
 import PropTypes from 'prop-types';
+import {AuthContext} from '../contexts/AuthContext';
+import AsyncStorage from '@react-native-community/async-storage';
 
-const Single = ({route}) => {
-  console.log('route', route);
-  const {file} = route.params;
+const Profile = ({navigation}) => {
+  const [isLoggedIn, setIsLoggedIn] = useContext(AuthContext);
+  console.log('profile', isLoggedIn);
+  const logout = async () => {
+    setIsLoggedIn(false);
+    await AsyncStorage.clear();
+    navigation.navigate('Login');
+  };
   return (
     <SafeAreaView style={styles.container}>
-      <Text>{file.title}</Text>
+      <Text>Profile</Text>
+      <Button title={'Logout'} onPress={logout} />
     </SafeAreaView>
   );
 };
@@ -18,12 +26,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 40,
   },
 });
 
-Single.propTypes = {
-  route: PropTypes.object,
+Profile.propTypes = {
+  navigation: PropTypes.object,
 };
 
-export default Single;
+export default Profile;

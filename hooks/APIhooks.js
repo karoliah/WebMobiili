@@ -1,0 +1,6 @@
+
+const useLoadMedia = () => {
+
+};
+
+export {useLoadMedia};
