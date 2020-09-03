@@ -1,11 +1,13 @@
-
 import React from 'react';
 import {StyleSheet, SafeAreaView, Text} from 'react-native';
+import PropTypes from 'prop-types';
 
-const Profile = () => {
+const Single = ({route}) => {
+  console.log('route', route);
+  const {file} = route.params;
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Profile</Text>
+      <Text>{file.title}</Text>
     </SafeAreaView>
   );
 };
@@ -16,7 +18,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    paddingTop: 40,
   },
 });
 
-export default Profile;
+Single.propTypes = {
+  route: PropTypes.object,
+};
+
+export default Single;
